@@ -2,9 +2,13 @@ package edu.devmind.goodreads.models;
 
 import edu.devmind.goodreads.models.enums.Genre;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(name = "books")
+@Getter
+@Setter
 public class Book {
 
     @Id
