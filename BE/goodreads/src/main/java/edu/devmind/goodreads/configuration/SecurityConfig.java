@@ -24,8 +24,9 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .formLogin(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(HttpMethod.GET,"/book/**").permitAll()
                         .requestMatchers("/login").permitAll()
+                        .requestMatchers(HttpMethod.GET,"/book/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/book").hasRole("AUTHOR")
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session ->

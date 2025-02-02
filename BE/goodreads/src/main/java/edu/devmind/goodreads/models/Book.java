@@ -23,4 +23,7 @@ public class Book {
     @Enumerated(EnumType.STRING)
     @Column(name = "genre", nullable = false)
     private Genre genre;
+
+    @Column(name = "author_id")
+    private Integer authorId;
 }
