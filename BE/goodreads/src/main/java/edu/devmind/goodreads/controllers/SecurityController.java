@@ -17,6 +17,7 @@ public class SecurityController {
 
     @PostMapping("/login")
     public String login(@RequestBody @Valid UserLoginDto dto) {
+        System.out.println("Request reached login endpoint");
         return userService.authenticate(dto.getUsername(), dto.getPassword());
     }
 }

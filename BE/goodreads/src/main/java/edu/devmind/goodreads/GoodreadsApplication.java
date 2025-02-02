@@ -15,7 +15,7 @@ public class GoodreadsApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-		String rawPassword = "password";
+		String rawPassword = "author";
 		String hashedPassword = encoder.encode(rawPassword);
 		System.out.println("Hashed Password: " + hashedPassword);
 	}

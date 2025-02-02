@@ -21,6 +21,12 @@ public class User {
     @Column(nullable = false, name = "password")
     private String password;
 
+    @Column(nullable = false, name = "first_name")
+    private String firstName;
+
+    @Column(nullable = false, name = "last_name")
+    private String lastName;
+
     @Column(nullable = false, name = "role")
     private String role;
 }
