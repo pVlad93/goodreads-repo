@@ -24,6 +24,8 @@ public class Book {
     @Column(name = "genre", nullable = false)
     private Genre genre;
 
-    @Column(name = "author_id")
-    private Integer authorId;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
 }

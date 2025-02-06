@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/book")
@@ -16,12 +17,9 @@ public class BookController {
     private BookService bookService;
 
     @GetMapping("/getAllBooks")
-    public List<Book> getAllBooks() {
-        return bookService.getAllBooks();
+    public List<BookDto> getAllBooks() {
+        List<Book> books = bookService.getAllBooks();
+        return books.stream().map(BookDto::new).collect(Collectors.toList());
     }
 
-    @PostMapping()
-    public void addBook(@RequestBody BookDto bookDto) {
-        bookService.saveBook(bookDto);
-    }
 }
