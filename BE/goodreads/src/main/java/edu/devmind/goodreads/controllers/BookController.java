@@ -2,12 +2,10 @@ package edu.devmind.goodreads.controllers;
 
 import edu.devmind.goodreads.dtos.BookDto;
 import edu.devmind.goodreads.models.Book;
-import edu.devmind.goodreads.models.User;
 import edu.devmind.goodreads.models.enums.Genre;
 import edu.devmind.goodreads.repositories.UserRepository;
 import edu.devmind.goodreads.services.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,12 +17,10 @@ import java.util.stream.Collectors;
 public class BookController {
 
     private final BookService bookService;
-    private final UserRepository userRepository;
 
     @Autowired
     public BookController(BookService bookService, UserRepository userRepository) {
         this.bookService = bookService;
-        this.userRepository = userRepository;
     }
 
     @GetMapping("/getAllBooks")
@@ -51,21 +47,6 @@ public class BookController {
 
     @PostMapping()
     public void postBook(@RequestBody BookDto bookDto) {
-        String title = bookDto.getTitle();
-        String description = bookDto.getDescription();
-        Genre genre = bookDto.getGenre();
-
-        String loggedUser = SecurityContextHolder.getContext().getAuthentication().getName();
-        Optional<User> userOptional = userRepository.findByUsername(loggedUser);
-        if (userOptional.isPresent()) {
-            User user = userOptional.get();
-            Book bookToBeSaved = new Book();
-            bookToBeSaved.setTitle(title);
-            bookToBeSaved.setDescription(description);
-            bookToBeSaved.setGenre(genre);
-            bookToBeSaved.setUser(user);
-            bookService.saveBook(bookToBeSaved);
-        }
-
+        bookService.saveBookDto(bookDto);
     }
 }
