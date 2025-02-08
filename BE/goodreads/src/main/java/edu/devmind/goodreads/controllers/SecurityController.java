@@ -12,8 +12,12 @@ import javax.validation.Valid;
 @RestController
 public class SecurityController {
 
+    private final UserService userService;
+
     @Autowired
-    private UserService userService;
+    public SecurityController(UserService userService) {
+        this.userService = userService;
+    }
 
     @PostMapping("/login")
     public String login(@RequestBody @Valid UserLoginDto dto) {

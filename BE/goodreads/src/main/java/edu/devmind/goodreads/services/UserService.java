@@ -12,14 +12,18 @@ import java.util.Optional;
 @Service
 public class UserService {
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
+
+    private final JwtService jwtService;
+
+    private final UserRepository userRepository;
 
     @Autowired
-    private JwtService jwtService;
-
-    @Autowired
-    private UserRepository userRepository;
+    public UserService(PasswordEncoder passwordEncoder, JwtService jwtService, UserRepository userRepository) {
+        this.passwordEncoder = passwordEncoder;
+        this.jwtService = jwtService;
+        this.userRepository = userRepository;
+    }
 
     public String authenticate(String username, String password) {
         Optional<User> user = userRepository.findByUsername(username);
