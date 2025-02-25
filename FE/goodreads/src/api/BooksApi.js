@@ -30,5 +30,9 @@ export const addBook = async (title, description, genre) => {
         throw new Error(errorData.message || "Failed to add books");
     }
 
-    return response.json();
+    return response.text();
 };
+
+export const getGenres = async () => {
+    return fetch(`${BASE_API}/genres`);
+}

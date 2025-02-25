@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import { TextField, Button, Box } from "@mui/material";
-import { addBook } from "../api/BooksApi";
+import React, { useEffect, useState } from "react";
+import { TextField, Button, Box, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import { addBook, getGenres } from "../api/BooksApi";
 import { useNavigate } from "react-router";
 
 export const AddBook = () => {
@@ -10,7 +10,21 @@ export const AddBook = () => {
       genre: ""
     });
 
+    const [genres, setGenres] = useState([]);
     const navigate = useNavigate();
+
+    useEffect(() => {
+      const fetchGenres = async () => {
+        try {
+          const response = await getGenres();
+          const data = await response.json();
+          setGenres(data);
+        } catch (error) {
+          console.error(`Error fetching genres: ${error}`);
+        }
+      };
+      fetchGenres();
+    }, []);
   
     const handleChange = (e) => {
       const { name, value } = e.target;
@@ -22,21 +36,13 @@ export const AddBook = () => {
   
     const handleSubmit = async (e) => {
       e.preventDefault();
-      console.log(formData);
-      // Add form submission logic here
-
+      
       try {
         const response = await addBook(formData.title, 
             formData.description, 
             formData.genre
         );
-        
-        if (response.ok) {
-            console.log("Request successfully sent");
-            navigate("/");
-        } else {
-            console.log("Error adding book: ", await response.json());
-        }
+        navigate("/");
         
       } catch (error) {
         console.log(`error: ${error}`);
@@ -63,13 +69,20 @@ export const AddBook = () => {
           onChange={handleChange}
           fullWidth
         />
-        <TextField
-          label="Genre"
-          name="genre"
-          value={formData.genre}
-          onChange={handleChange}
-          fullWidth
-        />
+        <FormControl fullWidth>
+          <InputLabel>Genre</InputLabel>
+          <Select
+            name="genre"
+            value={formData.genre}
+            onChange={handleChange}
+          >
+            {genres.map((genre) => (
+              <MenuItem key={genre} value={genre}>
+                {genre.replace("_", " ")}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
         <Button type="submit" variant="contained">
           Submit
         </Button>

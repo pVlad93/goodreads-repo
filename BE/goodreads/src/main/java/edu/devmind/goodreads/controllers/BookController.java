@@ -6,8 +6,10 @@ import edu.devmind.goodreads.models.enums.Genre;
 import edu.devmind.goodreads.repositories.UserRepository;
 import edu.devmind.goodreads.services.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -46,8 +48,18 @@ public class BookController {
     }
 
     @PostMapping()
-    public void postBook(@RequestBody BookDto bookDto) {
+    public ResponseEntity<String> postBook(@RequestBody BookDto bookDto) {
+
         bookService.saveBookDto(bookDto);
+
+        return ResponseEntity.ok("Book saved successfully");
+    }
+
+    @GetMapping("/genres")
+    public ResponseEntity<List<String>> getGenres() {
+        return ResponseEntity.ok(Arrays.stream(Genre.values())
+                .map(Enum::name)
+                .collect(Collectors.toList()));
     }
 
 }

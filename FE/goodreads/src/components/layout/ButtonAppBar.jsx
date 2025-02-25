@@ -28,16 +28,18 @@ export const ButtonAppBar = ({ token, setToken }) => {
 
     React.useEffect(() => {
         const fetchedRole = async () => {
-            if (!isAuthenticated) {
-                return;
+            if (!token) return; 
+            try {
+                const role = await getUserRole();
+                console.log("Received role: " + role);
+                setUserRole(role);
+            } catch (error) {
+                console.error("Error fetching role:", error);
             }
-            const role = await getUserRole();
-            console.log("Received role: " + role);
-            setUserRole(role);
-        }
-
+        };
+    
         fetchedRole();
-    }, [isAuthenticated, token]);
+    }, [token]);
 
     const handleLogin = () => {
         navigate("/login");
