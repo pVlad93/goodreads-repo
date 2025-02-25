@@ -32,4 +32,9 @@ public class ReviewController {
         return ResponseEntity.ok("Review saved successfully");
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteComment(@PathVariable Integer id) {
+        reviewService.deleteReview(id);
+        return ResponseEntity.ok("Deleted");
+    }
 }
