@@ -50,3 +50,20 @@ export const postReview = async (userId, bookId, reviewText, rating) => {
         return null;
     }
 };
+
+export const deleteComment = async (commentId) => {
+    try {
+        const token = localStorage.getItem("jwtToken");
+        const response = await fetch(`${BASE_API}${commentId}`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            }
+        })
+
+        return response;
+    } catch (error) {
+        console.log("Error sending requests: ", error);
+    }
+}

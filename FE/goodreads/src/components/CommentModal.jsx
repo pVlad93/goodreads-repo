@@ -1,6 +1,6 @@
 import { Box, Button, Modal, Typography, Divider, Rating, TextField } from "@mui/material";
 import { useState } from "react";
-import { getCommentsByBookId, postReview } from "../api/CommentsApi";
+import { deleteComment, getCommentsByBookId, postReview } from "../api/CommentsApi";
 import { useNavigate } from "react-router";
 
 const CommentModal = ({ modalData, bookTitle, bookId, userId, onReviewSubmitted, onClose }) => {
@@ -46,7 +46,26 @@ const CommentModal = ({ modalData, bookTitle, bookId, userId, onReviewSubmitted,
         } catch (error) {
             console.error(`Error fetching comments: ${error}`);
         }
+    }
 
+    const handleDelete = async (commentId) => {
+        try {
+            const response = await deleteComment(commentId);
+
+            if (!response || !response.ok) {
+                console.log("Error deleting comment");
+                return;
+            }
+
+            console.log("Comment deleted successfully");
+            const updatedComments = comments.filter(
+                comment => comment.id !== commentId
+            );
+            setComments(updatedComments);
+            onReviewSubmitted(updatedComments);
+        } catch (error) {
+            console.log(`Error deleting comment: ${error}`);
+        }
     }
 
     return(
@@ -59,6 +78,19 @@ const CommentModal = ({ modalData, bookTitle, bookId, userId, onReviewSubmitted,
                     <Typography variant="body2"><strong>{comment.userFirstName} {comment.userLastName}</strong> - {formatDate(comment.createdAt)}</Typography>
                     <Typography variant="body2" sx={{ fontStyle: "italic" }}>{comment.reviewText}</Typography>
                     <Typography variant="body2">⭐ {comment.rating}/5</Typography>
+
+                    {comment.userId === userId && (
+                        <Button
+                            variant="outlined"
+                            color="error"
+                            size="small"
+                            sx={{ marginTop: 1}}
+                            onClick={() => handleDelete(comment.id)}
+                        >
+                            Delete
+                        </Button>
+                    )}
+
                     {index !== modalData.length - 1 && <Divider sx={{ marginY: 1 }} />}
                 </Box>
             ))
