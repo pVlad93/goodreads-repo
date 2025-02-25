@@ -58,7 +58,7 @@ export const AddBook = () => {
         <TextField
           label="Book title"
           name="title"
-          value={formData.name}
+          value={formData.title}
           onChange={handleChange}
           fullWidth
         />
