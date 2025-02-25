@@ -26,10 +26,12 @@ public class BookService {
     }
 
     public List<Book> getAllBooks() {
+
         return bookRepository.findAll();
     }
 
     public Optional<Book> getBookById(Integer id) {
+
         return bookRepository.findById(id);
     }
 

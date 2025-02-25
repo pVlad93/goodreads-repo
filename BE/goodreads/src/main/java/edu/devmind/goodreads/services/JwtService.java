@@ -21,12 +21,13 @@ public class JwtService {
     @Value("${jwt.accessTokenValidityMS}")
     private int jwtExpirationMs;
 
-    public String createToken(String username) {
+    public String createToken(String username, Integer userId) {
         SecretKey key = Keys.hmacShaKeyFor(jwtSecret.getBytes());
 
         return Jwts.builder()
                 .header().and()
                 .subject(username)
+                .claim("userId", userId)
                 .issuedAt(new Date())
                 .expiration(new Date(new Date().getTime() + jwtExpirationMs))
                 .signWith(key)

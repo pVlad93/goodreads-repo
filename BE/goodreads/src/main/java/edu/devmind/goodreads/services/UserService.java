@@ -1,5 +1,6 @@
 package edu.devmind.goodreads.services;
 
+import edu.devmind.goodreads.dtos.UserDto;
 import edu.devmind.goodreads.models.User;
 import edu.devmind.goodreads.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +35,7 @@ public class UserService {
         }
         User fetchedUser = user.get();
         if (passwordEncoder.matches(password, fetchedUser.getPassword())) {
-            return jwtService.createToken(username);
+            return jwtService.createToken(username, fetchedUser.getId());
         }
 
         throw new UsernameNotFoundException("Wrong password");
@@ -51,5 +52,16 @@ public class UserService {
         Optional<User> userOptional = userRepository.findByUsername(loggedUser);
 
         return userOptional.map(user -> userRepository.findRoleByUsername(user.getUsername())).orElse(null);
+    }
+
+    public UserDto findById(Integer id) {
+        Optional<User> optionalUser = userRepository.findById(id);
+        if (optionalUser.isPresent()) {
+            UserDto userDto = new UserDto();
+            userDto.setFirstName(optionalUser.get().getFirstName());
+            userDto.setLastName(optionalUser.get().getLastName());
+            return userDto;
+        }
+        return null;
     }
 }
