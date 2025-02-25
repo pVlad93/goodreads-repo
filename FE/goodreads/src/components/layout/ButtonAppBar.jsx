@@ -40,8 +40,7 @@ export const ButtonAppBar = ({ token, setToken }) => {
     }, [isAuthenticated, token]);
 
     const handleLogin = () => {
-        console.log("Navigating to login...");
-        navigate("/login2");
+        navigate("/login");
     };
 
     const handleLogout = () => {

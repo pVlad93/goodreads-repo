@@ -32,7 +32,30 @@ export const getUserRole = async () => {
         const data = await response.text();
         return data; 
     } catch (error) {
-        console.error("Error fetching user role:". error);
+        console.error("Error fetching user role:", error);
+        return null;
+    }
+}
+
+export const getUserInfo = async (userId) => {
+    try {
+        const token = localStorage.getItem("jwtToken");
+        const response = await fetch(`${BASE_API}user/${userId}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`Failed to fetch user info: ${response.status}`);
+        }
+
+        const user = await response.json();
+        return user;
+    } catch (error) {
+        console.log(`Error fetching user ${error}`);
         return null;
     }
 }

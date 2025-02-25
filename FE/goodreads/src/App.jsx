@@ -1,6 +1,5 @@
 import { Route, Router, Routes } from "react-router"
 import BooksScreen from "./components/BooksScreen"
-import LoginComponent from "./components/LoginComponent"
 import ButtonAppBar from "./components/layout/ButtonAppBar"
 import LoginFinal from "./components/LoginFinal"
 import { useEffect, useState } from "react"
@@ -26,8 +25,7 @@ function App() {
     <>
         <ButtonAppBar token={token} setToken={setToken} />
         <Routes>
-          <Route path="/login" element={<LoginComponent setToken={setToken}/>} />
-          <Route path="/login2" element={<LoginFinal setToken={setToken}/>} />
+          <Route path="/login" element={<LoginFinal setToken={setToken}/>} />
           <Route path="/" element={<BooksScreen token = {token}/>} />
           <Route path="/book" element={<AddBook token = {token}/>} />
         </Routes>
