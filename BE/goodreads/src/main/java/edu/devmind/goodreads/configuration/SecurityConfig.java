@@ -38,6 +38,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.POST,"/login").permitAll()
                         .requestMatchers(HttpMethod.GET,"/book/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/review/book/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/book").hasRole("AUTHOR")
                         .anyRequest().authenticated()
                 )
