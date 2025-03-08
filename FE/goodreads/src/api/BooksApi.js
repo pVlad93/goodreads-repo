@@ -8,15 +8,15 @@ export const getAllBooks = () => fetch(`${BASE_API}/getAllBooks`, {
 });
 
 export const addBook = async (title, description, genre) => {
-    const token = localStorage.getItem("jwtToken"); // Retrieve JWT from storage
+    const token = localStorage.getItem("jwtToken");
 
-    console.log("Sending JWT Token:", token); // Debugging
+    console.log("Sending JWT Token:", token);
 
     const response = await fetch(BASE_API, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}` // Ensure correct format
+            "Authorization": `Bearer ${token}`
         },
         body: JSON.stringify({ title, description, genre })
     });
