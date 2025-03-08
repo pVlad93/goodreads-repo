@@ -98,31 +98,37 @@ const CommentModal = ({ modalData, bookTitle, bookId, userId, onReviewSubmitted,
             <Typography variant="body2" sx={{ marginBottom: 2 }}>No reviews yet.</Typography>
         )}
             {/* Review Section */}
-            <Box sx={{ marginTop: 3}}>
-                <Typography variant="body2">Add a Review: </Typography>
-                <TextField
-                    label="Write your comment"
-                    multiline
-                    rows={3}
-                    value={reviewText}
-                    onChange={handleReviewChange}
-                    fullWidth
-                    sx={{ marginBottom: 2}}
-                />
-                <Typography variant="body2">Rating:</Typography>
-                <Rating
-                    name="rating"
-                    value={rating}
-                    onChange={handleRatingChange}
-                    precision={1}
-                />
-                <Button onClick={handleSubmit} sex={{ marginTop: 2}}>Submit review</Button>
+
+            {userId && 
+                <>
+                    <Box sx={{ marginTop: 3}}>
+                        <Typography variant="body2">Add a Review: </Typography>
+                        <TextField
+                            label="Write your comment"
+                            multiline
+                            rows={3}
+                            value={reviewText}
+                            onChange={handleReviewChange}
+                            fullWidth
+                            sx={{ marginBottom: 2}}
+                        />
+                        <Typography variant="body2">Rating:</Typography>
+                        <Rating
+                            name="rating"
+                            value={rating}
+                            onChange={handleRatingChange}
+                            precision={1}
+                        />
+                        <Button onClick={handleSubmit} sx={{ marginTop: 2}}>Submit review</Button>
+                    </Box>
+                    <Button onClick={onClose} sx={{ marginTop: 2, display: "block", marginLeft: "auto" }}>Close</Button>
+                
+                </>
+            }
             </Box>
-            <Button onClick={onClose} sx={{ marginTop: 2, display: "block", marginLeft: "auto" }}>Close</Button>
-        </Box>
-    </Modal>
-    );
-}
+        </Modal>
+        );
+    }
 
 const formatDate = (dateString) => {
     return new Date(dateString).toLocaleDateString("en-US", {

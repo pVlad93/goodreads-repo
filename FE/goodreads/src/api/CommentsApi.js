@@ -2,12 +2,10 @@ const BASE_API="http://localhost:8080/review/"
 
 export const getCommentsByBookId = async (bookId) => {
     try {
-        const token = localStorage.getItem("jwtToken");
         const response = await fetch(`${BASE_API}book/${bookId}`, {
             method: "GET",
             headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`
+                "Content-Type": "application/json"
             }
         });
 
